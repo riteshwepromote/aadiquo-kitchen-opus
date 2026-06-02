@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 2,
   "builds": [
     {
       "src": "package.json",
@@ -10,7 +10,7 @@
     },
     {
       "src": "dist/server/server.js",
-      "use": "@vercel/edge"
+      "use": "@vercel/node"
     }
   ],
   "routes": [
