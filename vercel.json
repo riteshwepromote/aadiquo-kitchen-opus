@@ -9,8 +9,8 @@
       }
     },
     {
-      "src": "src/server.ts",
-      "use": "@vercel/edge"
+      "src": "api/handler.ts",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
@@ -20,7 +20,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/src/server.ts"
+      "dest": "/api/handler.ts"
     }
   ]
 }
