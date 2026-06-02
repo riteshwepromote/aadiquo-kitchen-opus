@@ -10,7 +10,7 @@
     },
     {
       "src": "src/server.ts",
-      "use": "@vercel/node"
+      "use": "@vercel/edge"
     }
   ],
   "routes": [
@@ -20,7 +20,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "src/server.ts"
+      "dest": "/src/server.ts"
     }
   ]
 }
