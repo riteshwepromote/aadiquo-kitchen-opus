@@ -9,7 +9,7 @@
       }
     },
     {
-      "src": "api/handler.ts",
+      "src": "api/handler.js",
       "use": "@vercel/node"
     }
   ],
@@ -20,7 +20,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/api/handler.ts"
+      "dest": "/api/handler.js"
     }
   ]
 }
