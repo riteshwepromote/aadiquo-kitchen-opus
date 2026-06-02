@@ -3,6 +3,7 @@ import { Environment, ContactShadows, MeshReflectorMaterial } from "@react-three
 import { Suspense, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import * as THREE from "three";
+import heroVideo from "../assets/modularKitchenHero.mp4";
 
 function KitchenIsland({ scrollProgress }: { scrollProgress: React.MutableRefObject<number> }) {
   const group = useRef<THREE.Group>(null);
@@ -109,22 +110,33 @@ export function Hero() {
 
   return (
     <section id="top" className="relative h-screen w-full overflow-hidden grain">
-      <div className="absolute inset-0" style={{ background: "var(--gradient-warm)" }} />
+{/* Video Background */}
+<div className="absolute inset-0 overflow-hidden">
+  <video
+    autoPlay
+    muted
+    loop
+    playsInline
+    preload="auto"
+    className="absolute inset-0 w-full h-full object-cover"
+  >
+    <source src={heroVideo} type="video/mp4" />
+  </video>
 
-      <div className="absolute inset-0">
-        <Canvas shadows camera={{ position: [4.5, 2.2, 5.5], fov: 35 }} dpr={[1, 1.6]}>
-          <color attach="background" args={["#0a0908"]} />
-          <fog attach="fog" args={["#0a0908", 8, 22]} />
-          <Suspense fallback={null}>
-            <ambientLight intensity={0.15} />
-            <spotLight position={[6, 8, 4]} angle={0.35} penumbra={0.8} intensity={1.2} color="#ffd9a8" castShadow />
-            <KitchenIsland scrollProgress={progress} />
-            <Floor />
-            <ContactShadows position={[0, 0.01, 0]} opacity={0.6} scale={14} blur={2.4} far={4} />
-            <Environment preset="apartment" />
-          </Suspense>
-        </Canvas>
-      </div>
+  {/* Dark Luxury Overlay */}
+  <div className="absolute inset-0 bg-black/65" />
+
+  {/* Premium Vignette */}
+  <div
+    className="absolute inset-0"
+    style={{
+      background:
+        "radial-gradient(circle at center, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.85) 100%)",
+    }}
+  />
+</div>
+
+      
 
       {/* vignette */}
       <div className="pointer-events-none absolute inset-0" style={{ boxShadow: "inset 0 0 200px 60px rgba(0,0,0,0.85)" }} />

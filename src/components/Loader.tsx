@@ -52,7 +52,7 @@ export function Loader() {
             transition={{ delay: 1.0, duration: 1.4, ease: "easeOut" }}
           >
             <div className="font-display text-6xl md:text-7xl brass-text tracking-[0.35em]">
-              AADIQUO
+              DC INTERIORS
             </div>
             <motion.div
               className="hairline mt-6 mx-auto w-40"

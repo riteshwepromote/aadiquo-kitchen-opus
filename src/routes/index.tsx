@@ -10,9 +10,9 @@ import { Difference, Projects, Testimonials, Contact, Footer } from "@/component
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "AADIQUO — Luxury Modular Kitchens" },
-      { name: "description", content: "AADIQUO crafts ultra-premium modular kitchens in walnut, matte black and brass. Where luxury meets functionality." },
-      { property: "og:title", content: "AADIQUO — Luxury Modular Kitchens" },
+      { title: "DC INTERIORS — Luxury Modular Kitchens" },
+      { name: "description", content: "DC INTERIORS crafts ultra-premium modular kitchens in walnut, matte black and brass. Where luxury meets functionality." },
+      { property: "og:title", content: "DC INTERIORS — Luxury Modular Kitchens" },
       { property: "og:description", content: "Crafted modular kitchens for modern living." },
     ],
   }),

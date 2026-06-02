@@ -1,17 +1,27 @@
 import { motion, useInView, useScroll, useTransform, animate } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import * as THREE from "three";
 import { SectionLabel } from "./Materials";
+
+import project1 from "../assets/project1.jpg";
+import project2 from "../assets/project2.webp";
+import project3 from "../assets/project3.jpg";
+import project4 from "../assets/project4.jpg";
+import project5 from "../assets/project5.jpg";
 
 // -------- Difference / Stats --------
 function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: "-20%" });
   const [val, setVal] = useState(0);
+
   useEffect(() => {
     if (!inView) return;
     const controls = animate(0, to, { duration: 2.4, ease: [0.22, 1, 0.36, 1], onUpdate: (v) => setVal(v) });
     return () => controls.stop();
   }, [inView, to]);
+
   return <span ref={ref}>{Math.round(val)}{suffix}</span>;
 }
 
@@ -25,7 +35,7 @@ export function Difference() {
   return (
     <section className="relative py-[20vh] px-6 md:px-14 bg-card/30">
       <div className="max-w-7xl mx-auto">
-        <SectionLabel index="05" label="The Aadiquo Difference" />
+        <SectionLabel index="05" label="The DC INTERIORS Difference" />
         <h2 className="font-display text-5xl md:text-[8rem] leading-[0.9] tracking-tight text-balance max-w-5xl">
           A studio, not a <em className="brass-text not-italic">factory</em>.
         </h2>
@@ -46,11 +56,36 @@ export function Difference() {
 
 // -------- Projects horizontal scroll --------
 const PROJECTS = [
-  { name: "Bandra Penthouse", place: "Mumbai", year: "2024", color: "from-[#3a2418] to-[#0a0908]" },
-  { name: "Marine Drive Residence", place: "Mumbai", year: "2024", color: "from-[#1a1410] to-[#2a1a14]" },
-  { name: "Pali Hill Villa", place: "Mumbai", year: "2023", color: "from-[#3b3a37] to-[#0a0908]" },
-  { name: "Aamby Valley Retreat", place: "Lonavala", year: "2023", color: "from-[#5b3f28] to-[#1a1410]" },
-  { name: "Lutyens Townhouse", place: "Delhi", year: "2022", color: "from-[#2a201a] to-[#0a0908]" },
+  {
+    name: "Bandra Penthouse",
+    place: "Mumbai",
+    year: "2024",
+    image: project1,
+  },
+  {
+    name: "Marine Drive Residence",
+    place: "Mumbai",
+    year: "2024",
+    image: project2,
+  },
+  {
+    name: "Pali Hill Villa",
+    place: "Mumbai",
+    year: "2023",
+    image: project3,
+  },
+  {
+    name: "Aamby Valley Retreat",
+    place: "Lonavala",
+    year: "2023",
+    image: project4,
+  },
+  {
+    name: "Lutyens Townhouse",
+    place: "Delhi",
+    year: "2022",
+    image: project5,
+  },
 ];
 
 export function Projects() {
@@ -65,19 +100,28 @@ export function Projects() {
           <SectionLabel index="06" label="Projects" />
           <div className="flex items-end justify-between flex-wrap gap-4">
             <h2 className="font-display text-4xl md:text-6xl">Selected <em className="brass-text not-italic">work</em>.</h2>
-            <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Drag — scroll — discover</div>
+            <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Scroll to explore</div>
           </div>
         </div>
         <motion.div style={{ x }} className="flex gap-6 px-6 md:px-14 will-change-transform">
           {PROJECTS.map((p, i) => (
             <div key={p.name} className="relative shrink-0 w-[80vw] md:w-[55vw] aspect-[4/5] overflow-hidden group">
-              <div className={`absolute inset-0 bg-gradient-to-br ${p.color}`} />
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-[5000ms] ease-out group-hover:scale-110"
+                style={{
+                  backgroundImage: `url(${p.image})`,
+                }}
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
               <div className="absolute inset-0 grain" />
               <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 30% 20%, oklch(0.8 0.1 75 / 0.18), transparent 60%)" }} />
-              {/* faux interior architecture lines */}
+              
+              {/* Architectural layout detailing lines */}
               <div className="absolute inset-x-0 bottom-0 h-1/2 border-t border-primary/10" />
               <div className="absolute inset-x-12 bottom-12 top-1/3 border border-primary/15" />
               <div className="absolute inset-x-20 bottom-20 top-[45%] border border-primary/10" />
+              
               <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 flex items-end justify-between">
                 <div>
                   <div className="text-[10px] uppercase tracking-[0.4em] text-primary mb-2">N°0{i + 1}</div>
@@ -136,19 +180,18 @@ export function Testimonials() {
 }
 
 // -------- Contact --------
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Suspense } from "react";
-import * as THREE from "three";
-
 function Showroom() {
   const grp = useRef<THREE.Group>(null);
-  useFrame((s) => {
+  
+  useFrame((state) => {
     if (!grp.current) return;
-    const t = s.clock.elapsedTime;
-    s.camera.position.z = 5 - Math.sin(t * 0.15) * 1.2;
-    s.camera.position.y = 2 + Math.sin(t * 0.1) * 0.3;
-    s.camera.lookAt(0, 1, 0);
+    // FIXED: Access clock cleanly directly via state configuration
+    const t = state.clock.getElapsedTime();
+    state.camera.position.z = 5 - Math.sin(t * 0.15) * 1.2;
+    state.camera.position.y = 2 + Math.sin(t * 0.1) * 0.3;
+    state.camera.lookAt(0, 1, 0);
   });
+  
   return (
     <group ref={grp}>
       <mesh position={[0, 0.5, 0]}><boxGeometry args={[4, 1, 1.4]} /><meshStandardMaterial color="#3a2418" roughness={0.55} /></mesh>
@@ -190,7 +233,7 @@ export function Contact() {
           <div className="mt-10 space-y-2 text-sm">
             <div>By appointment · Mon–Sat</div>
             <div className="text-muted-foreground">Studio 04, Worli · Mumbai</div>
-            <div className="text-muted-foreground">hello@aadiquo.com · +91 22 0000 0000</div>
+            <div className="text-muted-foreground">hello@dcinteriors.com · +91 22 0000 0000</div>
           </div>
         </div>
         <form onSubmit={(e) => e.preventDefault()} className="glass p-8 md:p-10 space-y-6">
@@ -225,11 +268,11 @@ export function Footer() {
     <footer className="relative border-t border-border/40 px-6 md:px-14 py-12">
       <div className="max-w-7xl mx-auto flex flex-wrap items-end justify-between gap-8">
         <div>
-          <div className="font-display text-3xl tracking-[0.3em] brass-text">AADIQUO</div>
+          <div className="font-display text-3xl tracking-[0.3em] brass-text">DC INTERIORS</div>
           <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mt-2">Modular Atelier · Est. 2014</div>
         </div>
         <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
-          © {new Date().getFullYear()} Aadiquo Design Studio. All rights reserved.
+          © {new Date().getFullYear()} DC INTERIORS Design Studio. All rights reserved.
         </div>
       </div>
     </footer>
