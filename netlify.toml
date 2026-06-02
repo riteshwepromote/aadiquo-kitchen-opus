@@ -1,0 +1,7 @@
+[build]
+  publish = "dist/client"
+  command = "npm run build"
+
+[functions]
+  # If you want Netlify Functions backed by the server build, point to dist/server
+  directory = "dist/server"
