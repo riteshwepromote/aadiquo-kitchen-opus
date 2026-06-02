@@ -1,29 +1,43 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Loader } from "@/components/Loader";
+import { SmoothScroll } from "@/components/SmoothScroll";
+import { Nav } from "@/components/Nav";
+import { Hero } from "@/components/Hero";
+import { Materials, Engineering } from "@/components/Materials";
+import { Configurator, Storage } from "@/components/Configurator";
+import { Difference, Projects, Testimonials, Contact, Footer } from "@/components/Sections";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "AADIQUO — Luxury Modular Kitchens" },
+      { name: "description", content: "AADIQUO crafts ultra-premium modular kitchens in walnut, matte black and brass. Where luxury meets functionality." },
+      { property: "og:title", content: "AADIQUO — Luxury Modular Kitchens" },
+      { property: "og:description", content: "Crafted modular kitchens for modern living." },
     ],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <Loader />
+      <SmoothScroll>
+        <Nav />
+        <main className="bg-background text-foreground">
+          <Hero />
+          <Materials />
+          <Engineering />
+          <Configurator />
+          <Storage />
+          <Difference />
+          <Projects />
+          <Testimonials />
+          <Contact />
+          <Footer />
+        </main>
+      </SmoothScroll>
+    </>
   );
 }
