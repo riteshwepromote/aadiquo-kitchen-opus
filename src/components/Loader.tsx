@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 export function Loader() {
   const [done, setDone] = useState(false);
   useEffect(() => {
-    const t = setTimeout(() => setDone(true), 2800);
+    const t = setTimeout(() => setDone(true), 1000);
     return () => clearTimeout(t);
   }, []);
 
@@ -52,7 +52,7 @@ export function Loader() {
             transition={{ delay: 1.0, duration: 1.4, ease: "easeOut" }}
           >
             <div className="font-display text-6xl md:text-7xl brass-text tracking-[0.35em]">
-              DC INTERIORS
+              AADIQUO
             </div>
             <motion.div
               className="hairline mt-6 mx-auto w-40"
